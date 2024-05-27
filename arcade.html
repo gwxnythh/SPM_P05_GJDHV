@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Ngee Ann City</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/icon2.png">
+    <!-- Styles -->
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+
+<body class="arcade-body">
+    <div class="arcade-container">
+        <div class="x-buttons">
+            <div class="left-buttons">
+                <!-- Exit Button -->
+                <a href="#" id="exit-button" class="button"><i class='bx bx-x'></i></a>
+            </div>
+            <div class="right-buttons">
+                <!-- Info Button -->
+                <a href="#" id="info-button" class="button"><i class='bx bx-info-circle'></i></a>
+        
+                <!-- Restart Button -->
+                <a href="#" id="restart-button" class="button"><i class='bx bx-repeat' ></i></a>
+            </div>
+        </div>
+
+        <div class="arcade-mode">
+            <div class="arcade-stats">
+                <h2><img src="./assets/images/coin.png">Coins <span id="coins">16</span></h2>
+                <h2>Turns <span id="turns">0</span></h2>
+                <h2><img src="./assets/images/medal.png">Score <span id="score">0</span></h2>
+            </div>
+
+            <div class="grid" id="grid">
+                <!-- Grid cells will be dynamically generated here -->
+            </div>
+
+            <div class="building-container">
+                <h2>Buildings:</h2>
+                <div class="building" id="residential" draggable="true"><img
+                        src="https://cdn-icons-png.flaticon.com/512/10751/10751558.png"></div>
+                <div class="building" id="industry" draggable="true"><img
+                        src="https://cdn-icons-png.flaticon.com/512/4514/4514899.png"></div>
+                <div class="building" id="commercial" draggable="true"><img
+                        src="https://cdn-icons-png.flaticon.com/512/998/998718.png"></div>
+                <div class="building" id="park" draggable="true"><img
+                        src="https://cdn-icons-png.flaticon.com/512/433/433102.png"></div>
+                <div class="building" id="road" draggable="true"><img
+                        src="https://cdn-icons-png.flaticon.com/512/5900/5900214.png"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/arcade.js"></script>
+    <script>
+        // Get the restart button
+const restartButton = document.getElementById("restart-button");
+
+// Add event listener for restart button click
+restartButton.addEventListener("click", function() {
+    // Get all building elements within the grid
+    const buildings = document.querySelectorAll("#grid .building");
+
+    // Remove each building from the grid
+    buildings.forEach(function(building) {
+        building.remove();
+    });
+});
+
+    </script>
+</body>
+
+</html>

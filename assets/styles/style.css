@@ -16,6 +16,11 @@
     --toggle-color: #ddd;
     --text-color: #343434;
     --gradient-color: linear-gradient(to right, #88a9c3, #a5b2bd);
+    --clr-1: #657c4e;
+    --clr-2:#e7d3b2;
+    --clr-3: #f0f0f0;
+    --clr-4: #a6c6d5;
+    --clr-5: #d3dfc7;
 
     /* ====== Transition ====== */
     --tran-02: all 0.2s ease;
@@ -34,6 +39,16 @@ body {
     margin: 0;
 }
 
+.newgame-body, .mainmenu-body, .arcade-body {
+    background-image: url(../images/city.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* ====== login.html ====== */
 .login-container {
     background-color: var(--sidebar-color);
     padding: 20px;
@@ -114,4 +129,225 @@ body {
 
 .login-container .google-login-btn:hover {
     background-color: #c23321;
+}
+
+/* ====== index.html ====== */
+.mainmenu-container {
+    background-color: var(--sidebar-color);
+    width: 400px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.mainmenu-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.mainmenu-container .logo img {
+    width: 200px;
+    margin-top: 20px;
+}
+
+.mainmenu-container .main-buttons {
+    display: grid;
+    margin: 0 auto;
+}
+
+.mainmenu-container .main-buttons a {
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+    text-decoration: none;
+    font-size: 25px;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.mainmenu-container .side-buttons {
+    width: 250px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.mainmenu-container .side-buttons a {
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+    height: 60px;
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* ====== newgame.html ====== */
+.newgame-container {
+    background-color: var(--sidebar-color);
+    width: 400px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.newgame-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.newgame-container .logo img {
+    width: 200px;
+    margin-top: 20px;
+}
+
+.newgame-container .main-buttons {
+    display: grid;
+    margin: 0 auto;
+}
+
+.newgame-container .main-buttons a {
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+    text-decoration: none;
+    font-size: 25px;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.newgame-container .side-buttons {
+    width: 250px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.newgame-container .side-buttons a {
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+    height: 60px;
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* ====== arcade.html ====== */
+.arcade-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--sidebar-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.arcade-container .arcade-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arcade-container .arcade-mode .arcade-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.arcade-container .arcade-mode .arcade-stats span {
+    margin-left: 5px;
+}
+
+.arcade-container .arcade-mode .arcade-stats h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+}
+
+.arcade-container .arcade-mode .arcade-stats img {
+    width: 25px;
+    margin-right: 5px;
+}
+
+.arcade-container .arcade-mode .grid {
+    display: grid;
+    grid-template-columns: repeat(20, 30px);
+    grid-template-rows: repeat(20, 30px);
+    gap: 2px;
+    border: 1px solid #000;
+}
+
+.arcade-container .arcade-mode .cell {
+    width: 30px;
+    height: 30px;
+    background-color: #eee;
+}
+
+.arcade-container .arcade-mode .building {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.arcade-container .arcade-mode .building img {
+    width: 30px;
+}
+
+.arcade-container .x-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    width: 100%;
+}
+
+.arcade-container .x-buttons a {
+    text-decoration: none;
+    color: var(--primary-color-light);
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.arcade-container .x-buttons .right-buttons {
+display: flex;
+justify-content: space-between;
+margin-left: 10px;
+}
+
+.arcade-container .x-buttons .right-buttons a {
+    margin-left: 10px;
 }
