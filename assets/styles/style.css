@@ -1,0 +1,117 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* ====== Colors ====== */
+    --body-color: #e4e9f7;
+    --sidebar-color: #fff;
+    --primary-color: #88a9c3;
+    --primary-color-light: #f6f5ff;
+    --secondary-color: #2b4257;
+    --secondary-color-light: #a5b2bd;
+    --toggle-color: #ddd;
+    --text-color: #343434;
+    --gradient-color: linear-gradient(to right, #88a9c3, #a5b2bd);
+
+    /* ====== Transition ====== */
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-color-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: var(--sidebar-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+.login-container .logo img {
+    width: 200px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-container .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-container .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.login-container .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container .login-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-container .login-btn:hover {
+    background-color: #0056b3;
+}
+
+.login-container .signup-link {
+    margin-top: 15px;
+    color: #555;
+}
+
+.login-container .signup-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-container .signup-link a:hover {
+    text-decoration: underline;
+}
+
+.login-container .google-login-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #db4437;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-container .google-login-btn:hover {
+    background-color: #c23321;
+}
