@@ -1,3 +1,31 @@
+// Get the restart button
+const restartButton = document.getElementById("restart-button");
+
+// Add event listener for restart button click
+restartButton.addEventListener("click", function () {
+    // Get all building elements within the grid
+    const buildings = document.querySelectorAll("#grid .building");
+
+    // Remove each building from the grid
+    buildings.forEach(function (building) {
+        building.remove();
+    });
+
+    // Reset coins, turns, and score values
+    coins = 16;
+    turns = 0;
+    score = 0;
+    connectedCells = [];
+
+    // Update the UI
+    updateCoins(coins);
+    updateTurns(turns);
+    updateScore(score);
+
+    // Generate new random buildings
+    generateRandomBuilding();
+});
+
 // JavaScript Logic
 const grid = document.getElementById('grid');
 const buildings = ['residential', 'industry', 'commercial', 'park', 'road'];
