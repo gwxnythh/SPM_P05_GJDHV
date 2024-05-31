@@ -1,17 +1,3 @@
-// Get the restart button
-const restartButton = document.getElementById("restart-button");
-
-// Add event listener for restart button click
-restartButton.addEventListener("click", function () {
-    // Get all building elements within the grid
-    const buildings = document.querySelectorAll("#grid .building");
-
-    // Remove each building from the grid
-    buildings.forEach(function (building) {
-        building.remove();
-    });
-});
-
 // JavaScript Logic
 const grid = document.getElementById('grid');
 const buildings = ['residential', 'industry', 'commercial', 'park', 'road'];
@@ -19,6 +5,8 @@ let coins = 16;
 let turns = 0;
 let score = 0; // Score variable
 let connectedCells = [];
+
+document.addEventListener('DOMContentLoaded', generateRandomBuilding, false);
 
 // Generate grid cells
 for (let i = 0; i < 20 * 20; i++) {
@@ -73,11 +61,21 @@ function drop(event) {
     if (cell.classList.contains('cell') && cell.children.length === 0) {
         if (coins > 0) {
             if (connectedCells.length === 0 || isAdjacentToConnected(cell)) {
-                cell.appendChild(buildingElement.cloneNode(true));
+                let cloneNode = buildingElement.cloneNode(true);
+
+                cloneNode.id = buildingId + "-" + cell;
+                cloneNode.classList.remove("building-icon");
+                cloneNode.classList.add("building");
+                cloneNode.style.display = "display";
+                
+                cell.appendChild(cloneNode);
+
                 coins -= 1;
                 turns += 1;
                 const buildingScore = calculateBuildingScore(buildingId, cell); // Calculate score based on building type and adjacent buildings
+                const coinsEarned = calculateBuildingCoinEarned(buildingId, cell);
                 score += buildingScore; // Update score with building score
+                coins += coinsEarned;   // Update coins with coins earned
                 updateCoins(coins);
                 updateTurns(turns);
                 updateScore(score); // Update score in the UI
@@ -86,6 +84,7 @@ function drop(event) {
                     alert("You've run out of coins!");
                     return;
                 }
+                generateRandomBuilding();
             } else {
                 alert("You can only build on squares adjacent to existing buildings.");
                 return;
@@ -114,7 +113,7 @@ function calculateBuildingScore(buildingId, cell) {
     let buildingScore = 0;
 
     const row = Math.floor(Array.from(grid.children).indexOf(cell) / 20);
-    const col = Array.from(cell.parentNode.children).indexOf(cell);
+    const col = Array.from(grid.children).indexOf(cell) % 20;
 
     switch (buildingId) {
         case 'residential':
@@ -147,21 +146,43 @@ function calculateBuildingScore(buildingId, cell) {
     return buildingScore;
 }
 
+function calculateBuildingCoinEarned(buildingId, cell) {
+    let coinsEarned = 0;
+
+    const row = Math.floor(Array.from(grid.children).indexOf(cell) / 20);
+    const col = Array.from(grid.children).indexOf(cell) % 20;
+
+    switch (buildingId) {
+        case 'residential':
+            break;
+        case 'industry':
+            coinsEarned += calculateAdjacentCoinEarned(row, col, 'residential', 1);
+            break;
+        case 'commercial':
+            coinsEarned += calculateAdjacentCoinEarned(row, col, 'residential', 1);
+            break;
+        case 'park':
+            break;
+        case 'road':
+            break;
+        default:
+            break;
+    }
+
+    return coinsEarned;
+}
+
 // Function to calculate score based on adjacent buildings of a specific type
 function calculateAdjacentScore(row, col, buildingType, scoreIncrement) {
     let adjacentScore = 0;
 
-    // Check adjacent cells
-    for (let i = Math.max(row - 1, 0); i <= Math.min(row + 1, 19); i++) {
-        for (let j = Math.max(col - 1, 0); j <= Math.min(col + 1, 19); j++) {
-            if (i !== row || j !== col) {
-                const adjacentCell = grid.children[i * 20 + j];
-                if (adjacentCell.children.length > 0) {
-                    const adjacentBuilding = adjacentCell.children[0].id;
-                    if (adjacentBuilding === buildingType) {
-                        adjacentScore += scoreIncrement;
-                    }
-                }
+    const adjacentIndices = findAdjacentBuilding(row, col, 20, 20);
+    for(let i = 0; i < adjacentIndices.length; i++) {
+        const adjacentCell = grid.children[adjacentIndices[i]];
+        if (adjacentCell.children.length > 0) {
+            const adjacentBuilding = adjacentCell.children[0].id.split('-')[0];
+            if (adjacentBuilding === buildingType) {
+                adjacentScore += scoreIncrement;
             }
         }
     }
@@ -176,7 +197,7 @@ function calculateConnectedRoadScore(row) {
     // Iterate through each column in the specified row
     for (let col = 0; col < 20; col++) {
         const cell = grid.children[row * 20 + col];
-        if (cell.children.length > 0 && cell.children[0].id === 'road') {
+        if (cell.children.length > 0 && cell.children[0].id.split('-')[0] === 'road') {
             if (prevRoadCol === -1 || col === prevRoadCol + 1) {
                 connectedRoads++; // Increment the count if a new road is in the same row as the previous road
             }
@@ -186,4 +207,65 @@ function calculateConnectedRoadScore(row) {
 
     // Return 1 if more than one road is connected in the same row and it's not the first road, otherwise return 0
     return connectedRoads > 1 ? 1 : 0;
+}
+
+function calculateAdjacentCoinEarned(row, col, buildingType, coinEarned) {
+    let adjacentCoinEarned = 0;
+
+    const adjacentIndices = findAdjacentBuilding(row, col, 20, 20);
+    for(let i = 0; i < adjacentIndices.length; i++) {
+        const adjacentCell = grid.children[adjacentIndices[i]];
+        if (adjacentCell.children.length > 0) {
+            const adjacentBuilding = adjacentCell.children[0].id.split('-')[0];
+            if (adjacentBuilding === buildingType) {
+                adjacentCoinEarned += coinEarned;
+            }
+        }
+    }
+
+    return adjacentCoinEarned;
+}
+
+function findAdjacentBuilding(row, col, maxCols, maxRows) {
+    const adjacentIndices = [];
+    const currentIndex = row * maxCols + col;
+    // Check above cell
+    if (row > 0) {
+        adjacentIndices.push(currentIndex - maxCols);
+    }
+    // Check below cell
+    if (row < maxRows - 1) {
+        adjacentIndices.push(currentIndex + maxCols);
+    }
+    // Check left cell
+    if (col > 0) {
+        adjacentIndices.push(currentIndex - 1);
+    }
+    // Check right cell
+    if (col < maxCols - 1) {
+        adjacentIndices.push(currentIndex + 1);
+    }
+
+    return adjacentIndices;
+}
+
+function generateRandomBuilding() {
+    resetBuildingDisplay();
+    let randomBuildingOne = getRandomBuildingType();
+    let randomBuildingTwo = getRandomBuildingType();
+    while (randomBuildingOne === randomBuildingTwo) {
+        randomBuildingTwo = getRandomBuildingType();
+    }
+    document.getElementById(randomBuildingOne).style.display = "block";
+    document.getElementById(randomBuildingTwo).style.display = "block";
+}
+
+function resetBuildingDisplay() {
+    for (let i = 0; i < buildings.length; i++) {    
+        document.getElementById(buildings[i]).style.display = "none";
+    }
+}
+
+function getRandomBuildingType() {
+    return buildings[Math.floor(Math.random() * buildings.length)];
 }
