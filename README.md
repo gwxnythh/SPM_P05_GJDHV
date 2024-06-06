@@ -7,10 +7,6 @@
 
 ### 1st Valerie: [ ]
     1.1 Implement login screen interface. [ ]
-    5.1 Implement Load Saved Game interface. [ ]
-
-### 1st Daphne: [ ]
-    6.1 Implement Display High Score interface. [ ]
 
 ### 1st Gwen: [ ]
     2.1 Create Main Menu User Interface. [ ]
@@ -22,11 +18,13 @@
     3.4 Randomly generate 2 buildings each turn. [ ]
 
 ### 2nd Daphne: [ ]
+    6.1 Implement Display High Score interface. [ ]
     4.1 Implement Free Play Game interface. [ ]
     4.2 Initialize 5x5 grid. [ ]
     4.3 Implement unlimited coins. [ ]
 
 ### 2nd Valerie: [ ]
+    5.1 Implement Load Saved Game interface. [ ]
     1.2 Implement login logic with credential validation. [ ] 
     1.3 Redirect to the main menu after successful login. [ ]
     7.1 Implement logout functionality in the main menu. [ ]
