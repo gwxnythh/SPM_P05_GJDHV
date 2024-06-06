@@ -2,6 +2,13 @@
 
 <img src="assets/images/icon2.png" alt="drawing" width="150"/>
 
+## Group Members:
+1. [S10262576] Ggwendolynn Lee Rasni 
+2. [S10262569] Jovan Tan Hao 
+3. [S10262676] Valerie Kho Yi Ting 
+4. [S10262840] Daphne Cheng Pei En  
+5. [S10262621] Tan Han Yan 
+
 ## Project Overview
 ### Product Goal 
 > Lorem Ipsum...
