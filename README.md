@@ -1,5 +1,11 @@
-# 
 # SPM_P05_GJDHV (Ngee Ann City Project)
+
+## Project Overview
+### Product Goal 
+> Lorem Ipsum...
+
+### Definition of Done 
+> Lorem Ipsum...
 
 ## Priority Order
 > [!NOTE]
@@ -59,7 +65,3 @@
 ### 3rd Valerie: [ ]
     5.2 Implement file reading for saved game state to database. [ ]
     5.3 Restore game state from file/database. [ ]
-
-
-
-
