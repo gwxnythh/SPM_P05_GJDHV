@@ -1,5 +1,8 @@
 # SPM_P05_GJDHV (Ngee Ann City Project)
+
+<img src="assets/images/icon2.png" alt="drawing" width="200"/>
 ![logo](assets/images/icon2.png)
+
 
 ## Project Overview
 ### Product Goal 
