@@ -17,7 +17,7 @@
     --text-color: #343434;
     --gradient-color: linear-gradient(to right, #88a9c3, #a5b2bd);
     --clr-1: #657c4e;
-    --clr-2:#e7d3b2;
+    --clr-2: #e7d3b2;
     --clr-3: #f0f0f0;
     --clr-4: #a6c6d5;
     --clr-5: #d3dfc7;
@@ -39,7 +39,9 @@ body {
     margin: 0;
 }
 
-.newgame-body, .mainmenu-body, .arcade-body {
+.newgame-body,
+.mainmenu-body,
+.arcade-body {
     background-image: url(../images/city.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -48,87 +50,96 @@ body {
     padding: 0;
 }
 
-/* ====== login.html ====== */
+/* ====== login-register.html ====== */
 .login-container {
-    background-color: var(--sidebar-color);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    width: 400px;
 }
 
 .login-container .logo img {
-    width: 200px;
+    width: 250px;
     margin-bottom: 20px;
-    border-radius: 50%;
 }
 
-.login-container h2 {
-    margin-bottom: 20px;
-    color: #333;
+
+.login-container .registration {
+    display: none;
 }
 
-.login-container .input-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.login-container .input-group label {
+.login-container #check:checked~.registration {
     display: block;
-    margin-bottom: 5px;
-    color: #555;
 }
 
-.login-container .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.login-container #check:checked~.login {
+    display: none;
 }
 
-.login-container .login-btn {
+.login-container #check {
+    display: none;
+}
+
+.login-container .form {
+    padding: 2rem;
+}
+
+.login-container .form header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-container .form input {
+    height: 60px;
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 0 15px;
+    font-size: 17px;
+    margin-bottom: 1.3rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+.login-container .form input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.login-container .form input.button {
     color: #fff;
-    border: none;
-    border-radius: 5px;
+    background: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 1.7rem;
     cursor: pointer;
-    margin-top: 10px;
+    transition: 0.4s;
 }
 
-.login-container .login-btn:hover {
-    background-color: #0056b3;
+.login-container .form input.button:hover {
+    background: var(--secondary-color);
 }
 
-.login-container .signup-link {
-    margin-top: 15px;
-    color: #555;
+.login-container .signup {
+    font-size: 17px;
+    text-align: center;
 }
 
-.login-container .signup-link a {
-    color: #007bff;
-    text-decoration: none;
+.login-container .signup label {
+    color: var(--primary-color);
+    cursor: pointer;
 }
 
-.login-container .signup-link a:hover {
+.login-container .signup label:hover {
     text-decoration: underline;
-}
-
-.login-container .google-login-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #db4437;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.login-container .google-login-btn:hover {
-    background-color: #c23321;
+    color: var(--secondary-color);
 }
 
 /* ====== index.html ====== */
@@ -323,6 +334,7 @@ body {
     width: 50px;
     height: 50px;
     cursor: pointer;
+
     img {
         width: 50px;
     }
@@ -365,9 +377,9 @@ body {
 }
 
 .arcade-container .x-buttons .right-buttons {
-display: flex;
-justify-content: space-between;
-margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
 }
 
 .arcade-container .x-buttons .right-buttons a {
