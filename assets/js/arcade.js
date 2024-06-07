@@ -1,20 +1,3 @@
-// No Inspect Element (delete before submission)
-document.onkeydown = function(e) {
-    if(event.keyCode == 123) {
-    return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-    return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-    return false;
-    }
-    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-    return false;
-    }
-    }
-    
-
 // Get the restart button
 const restartButton = document.getElementById("restart-button");
 
@@ -27,20 +10,6 @@ restartButton.addEventListener("click", function () {
     buildings.forEach(function (building) {
         building.remove();
     });
-
-    // Reset coins, turns, and score values
-    coins = 16;
-    turns = 0;
-    score = 0;
-    connectedCells = [];
-
-    // Update the UI
-    updateCoins(coins);
-    updateTurns(turns);
-    updateScore(score);
-
-    // Generate new random buildings
-    generateRandomBuilding();
 });
 
 // JavaScript Logic
@@ -112,7 +81,7 @@ function drop(event) {
                 cloneNode.classList.remove("building-icon");
                 cloneNode.classList.add("building");
                 cloneNode.style.display = "display";
-                
+
                 cell.appendChild(cloneNode);
 
                 coins -= 1;
@@ -222,7 +191,7 @@ function calculateAdjacentScore(row, col, buildingType, scoreIncrement) {
     let adjacentScore = 0;
 
     const adjacentIndices = findAdjacentBuilding(row, col, 20, 20);
-    for(let i = 0; i < adjacentIndices.length; i++) {
+    for (let i = 0; i < adjacentIndices.length; i++) {
         const adjacentCell = grid.children[adjacentIndices[i]];
         if (adjacentCell.children.length > 0) {
             const adjacentBuilding = adjacentCell.children[0].id.split('-')[0];
@@ -258,7 +227,7 @@ function calculateAdjacentCoinEarned(row, col, buildingType, coinEarned) {
     let adjacentCoinEarned = 0;
 
     const adjacentIndices = findAdjacentBuilding(row, col, 20, 20);
-    for(let i = 0; i < adjacentIndices.length; i++) {
+    for (let i = 0; i < adjacentIndices.length; i++) {
         const adjacentCell = grid.children[adjacentIndices[i]];
         if (adjacentCell.children.length > 0) {
             const adjacentBuilding = adjacentCell.children[0].id.split('-')[0];
@@ -306,7 +275,7 @@ function generateRandomBuilding() {
 }
 
 function resetBuildingDisplay() {
-    for (let i = 0; i < buildings.length; i++) {    
+    for (let i = 0; i < buildings.length; i++) {
         document.getElementById(buildings[i]).style.display = "none";
     }
 }
