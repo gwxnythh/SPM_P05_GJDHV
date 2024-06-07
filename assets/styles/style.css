@@ -373,3 +373,24 @@ margin-left: 10px;
 .arcade-container .x-buttons .right-buttons a {
     margin-left: 10px;
 }
+
+.arcade-container .arcade-mode .building-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.arcade-container .arcade-mode .demolish-btn {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-color-light);
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-radius: 5px;
+    width: 40px;
+}
