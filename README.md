@@ -20,13 +20,13 @@
 > [!NOTE]
 > Some Items can be done at the same time!
 
-### 1st Sprint - Valerie: [ ]
-    1.1 Implement login screen interface. [ ]
+### 1st Sprint - Valerie: [✔]
+    1.1 Implement login screen interface. [✔]
 
-### 1st Sprint -  Gwen: [ ]
-    2.1 Create Main Menu User Interface. [ ]
-    2.2 Implement Menu Options. [ ]
-    2.3 Link Menu Options to corresponding pages. [ ]
+### 1st Sprint -  Gwen: [✔]
+    2.1 Create Main Menu User Interface. [✔]
+    2.2 Implement Menu Options. [✔]
+    2.3 Link Menu Options to corresponding pages. [✔]
     3.1 Implement Arcade Game interface. [✔]
     3.2 Initialize 20x20 grid. [✔]
     3.3 Implement coin counter (Starting with 16 coins). [✔]
