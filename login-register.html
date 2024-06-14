@@ -17,10 +17,10 @@
                 <img src="./assets/images/icon3.png" alt="Logo">
             </div>
             <header>Login</header>
-            <form action="#">
-                <input type="text" placeholder="Enter your email">
-                <input type="password" placeholder="Enter your password">
-                <input type="button" class="button" value="Login">
+            <form id="login-form">
+                <input type="text" id="login-email" placeholder="Enter your email">
+                <input type="password" id="login-password" placeholder="Enter your password">
+                <input type="button" class="button" value="Login" onclick="login()">
             </form>
             <div class="signup">
                 <span class="signup">Don't have an account?
@@ -33,11 +33,11 @@
                 <img src="./assets/images/icon3.png" alt="Logo">
             </div>
             <header>Signup</header>
-            <form action="#">
-                <input type="text" placeholder="Enter your email">
-                <input type="password" placeholder="Create a password">
-                <input type="password" placeholder="Confirm your password">
-                <input type="button" class="button" value="Signup">
+            <form id="signup-form">
+                <input type="text" id="signup-email" placeholder="Enter your email">
+                <input type="password" id="signup-password" placeholder="Create a password">
+                <input type="password" id="signup-confirm-password" placeholder="Confirm your password">
+                <input type="button" class="button" value="Signup" onclick="signup()">
             </form>
             <div class="signup">
                 <span class="signup">Already have an account?
@@ -46,6 +46,7 @@
             </div>
         </div>
     </div>
+    <script src="./assets/js/login.js"></script>
 </body>
 
 </html>
