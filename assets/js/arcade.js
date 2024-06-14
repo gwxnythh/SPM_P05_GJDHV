@@ -24,7 +24,6 @@ let connectedCells = [];
 let demolishMode = false;
 
 const exitButton = document.getElementById("exit-button");
-// Add event listener for restart button click
 exitButton.addEventListener("click", function () {
     let username = prompt("Please enter your name");
     if (username != null) {

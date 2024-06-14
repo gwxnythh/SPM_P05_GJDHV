@@ -39,6 +39,7 @@ body {
     margin: 0;
 }
 
+.freeplay-body,
 .newgame-body,
 .mainmenu-body,
 .arcade-body {
@@ -395,6 +396,148 @@ body {
 }
 
 .arcade-container .arcade-mode .demolish-btn {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-color-light);
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-radius: 5px;
+    width: 40px;
+}
+
+/* ====== freeplay.html ====== */
+.freeplay-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--sidebar-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.freeplay-container .freeplay-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.freeplay-container .freeplay-mode .freeplay-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.freeplay-container .freeplay-mode .freeplay-stats span {
+    margin-left: 5px;
+}
+
+.freeplay-container .freeplay-mode .freeplay-stats h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+}
+
+.freeplay-container .freeplay-mode .freeplay-stats img {
+    width: 25px;
+    margin-right: 5px;
+}
+
+.freeplay-container .freeplay-mode .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 30px);
+    grid-template-rows: repeat(5, 30px);
+    gap: 2px;
+    border: 1px solid #000;
+    padding: 2px;
+}
+
+.freeplay-container .freeplay-mode .cell {
+    width: 30px;
+    height: 30px;
+    background-color: #eee;
+}
+
+.freeplay-container .freeplay-mode .building {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.freeplay-container .freeplay-mode .building-icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+
+    img {
+        width: 50px;
+    }
+}
+
+.freeplay-container .freeplay-mode .building-container h2 {
+    text-align: center;
+}
+
+.freeplay-container .freeplay-mode .building img {
+    width: 30px;
+}
+
+.freeplay-container .freeplay-mode .building-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+
+}
+
+.freeplay-container .x-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    width: 100%;
+}
+
+.freeplay-container .x-buttons a {
+    text-decoration: none;
+    color: var(--primary-color-light);
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.freeplay-container .x-buttons .right-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.freeplay-container .x-buttons .right-buttons a {
+    margin-left: 10px;
+}
+
+.freeplay-container .freeplay-mode .building-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.freeplay-container .freeplay-mode .demolish-btn {
     font-size: 30px;
     display: flex;
     justify-content: center;
