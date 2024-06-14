@@ -12,6 +12,8 @@ restartButton.addEventListener("click", function () {
     });
 });
 
+const APIKEY = "666c33a61bf4f00fdda6b84e";
+
 // JavaScript Logic
 const grid = document.getElementById('grid');
 const buildings = ['residential', 'industry', 'commercial', 'park', 'road'];
@@ -19,8 +21,36 @@ let coins = 16;
 let turns = 0;
 let score = 0; // Score variable
 let connectedCells = [];
+let demolishMode = false;
+
+const exitButton = document.getElementById("exit-button");
+// Add event listener for restart button click
+exitButton.addEventListener("click", function () {
+    let username = prompt("Please enter your name");
+    if (username != null) {
+        saveGameData(username);
+    }
+});
 
 document.addEventListener('DOMContentLoaded', generateRandomBuilding, false);
+document.addEventListener('DOMContentLoaded', registerDemolishEvent, false);
+
+function registerDemolishEvent() {
+    const demolishButton = document.getElementById('demolish-btn');
+    demolishButton.addEventListener('click', enableDemolishMode);
+}
+
+function enableDemolishMode() {
+    demolishMode = true;
+    const demolishButton = document.getElementById('demolish-btn');
+    demolishButton.style.border = "2px dotted red";  
+}
+
+function disableDemolishMode() {
+    demolishMode = false;
+    const demolishButton = document.getElementById('demolish-btn');
+    demolishButton.style.border = "";  
+}
 
 // Generate grid cells
 for (let i = 0; i < 20 * 20; i++) {
@@ -28,6 +58,7 @@ for (let i = 0; i < 20 * 20; i++) {
     cell.classList.add('cell');
     grid.appendChild(cell);
 }
+cellClicked();
 
 // Add event listeners for drag and drop
 buildings.forEach(building => {
@@ -39,6 +70,7 @@ grid.addEventListener('dragover', dragOver);
 grid.addEventListener('drop', drop);
 
 function dragStart(event) {
+    disableDemolishMode()
     event.dataTransfer.setData('text', event.target.parentNode.id); // Set the data to the parentNode id
 }
 
@@ -95,7 +127,8 @@ function drop(event) {
                 updateScore(score); // Update score in the UI
                 connectedCells.push(cell);
                 if (coins === 0) {
-                    alert("You've run out of coins!");
+                    alert("You've run out of coins! You have score: " + score);
+                    checkHighScoreAndUpdate(score);
                     return;
                 }
                 generateRandomBuilding();
@@ -282,4 +315,90 @@ function resetBuildingDisplay() {
 
 function getRandomBuildingType() {
     return buildings[Math.floor(Math.random() * buildings.length)];
+}
+
+function cellClicked(el, etype) {
+    const cells = document.querySelectorAll('#grid .cell');
+    cells.forEach(function(cell) {
+        cell.addEventListener('click', function() {
+            if (!demolishMode) {
+                return
+            }
+            const specificDiv = cell.querySelector('div.building');
+            if (specificDiv) {
+                coins -= 1;
+                updateCoins(coins);
+                removeCellFromConnectedCells(specificDiv);
+                specificDiv.remove();
+                disableDemolishMode();
+            }
+        });
+    });
+}
+
+function removeCellFromConnectedCells(specificDiv) {
+    const index = connectedCells.findIndex(cell => cell.children[0] === specificDiv);
+    if (index !== -1) {
+        connectedCells.splice(index, 1);
+    }
+}
+
+function checkHighScoreAndUpdate(newScore) {
+    fetch(`https://ngeeanncity-a92e.restdb.io/rest/leaderboard?q={}&h={"$max":1}&sort=score&dir=-1`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "x-apikey": APIKEY,
+            "Cache-Control": "no-cache",
+        },
+    })
+        .then((res) => res.json())
+        .then((response) => {
+            if (response.length == 0 || newScore > response[0].score) {
+                let username = prompt("Please enter your name");
+                if (username != null) {
+                    saveNewHighestScore(username, newScore); 
+                }
+            }
+        });
+}
+
+function saveNewHighestScore(username, newScore) {
+    fetch(`https://ngeeanncity-a92e.restdb.io/rest/leaderboard`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "x-apikey": APIKEY,
+            "Cache-Control": "no-cache",
+        },
+        body: JSON.stringify({ name: username, score: newScore }),
+    })
+        .then((res) => res.json())
+        .then((response) => {
+            console.log(response);
+        });
+}
+
+function saveGameData(username) {
+    let gameData = [];
+    var grid = document.getElementById('grid');
+    for (let i = 0; i < grid.children.length; i++) {
+        var childWithClass = grid.children[i].querySelector('.building');
+        if (childWithClass) {
+            gameData.push({ index: i, buildingId: childWithClass.id})
+        }
+    }
+    fetch(`https://ngeeanncity-a92e.restdb.io/rest/gamedata`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "x-apikey": APIKEY,
+            "Cache-Control": "no-cache",
+        },
+        body: JSON.stringify({ name: username, grid: JSON.stringify(gameData)}),
+    })
+        .then((res) => res.json())
+        .then((response) => {
+            window.location.href = 'index.html';
+        });
 }
