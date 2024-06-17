@@ -43,7 +43,8 @@ body {
 .freeplay-body,
 .newgame-body,
 .mainmenu-body,
-.arcade-body {
+.arcade-body, 
+.displayhs-body{
     background-image: url(../images/city.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -564,4 +565,46 @@ body {
     padding: 5px;
     border-radius: 5px;
     width: 40px;
+}
+/* ====== displayhighscore.html ====== */
+
+.displayhs-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+.displayhs-container .x-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    width: 100%;
+}
+.displayhs-container .x-buttons a {
+    text-decoration: none;
+    color: var(--primary-color-light);
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+.heading1 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 18px;
+}
+th {
+    padding: 10px;
+    border-bottom: 3px solid #ddd;
 }
