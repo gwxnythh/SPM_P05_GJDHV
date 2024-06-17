@@ -10,6 +10,17 @@ restartButton.addEventListener("click", function () {
     buildings.forEach(function (building) {
         building.remove();
     });
+
+    // Reset score, coins, and turns
+    coins = 16;
+    turns = 0;
+    score = 0;
+    connectedCells = [];
+
+    // Update the UI with the reset values
+    updateCoins(coins);
+    updateTurns(turns);
+    updateScore(score);
 });
 
 const APIKEY = "666c33a61bf4f00fdda6b84e";
@@ -42,13 +53,13 @@ function registerDemolishEvent() {
 function enableDemolishMode() {
     demolishMode = true;
     const demolishButton = document.getElementById('demolish-btn');
-    demolishButton.style.border = "2px dotted red";  
+    demolishButton.style.border = "2px dotted red";
 }
 
 function disableDemolishMode() {
     demolishMode = false;
     const demolishButton = document.getElementById('demolish-btn');
-    demolishButton.style.border = "";  
+    demolishButton.style.border = "";
 }
 
 // Generate grid cells
@@ -318,8 +329,8 @@ function getRandomBuildingType() {
 
 function cellClicked(el, etype) {
     const cells = document.querySelectorAll('#grid .cell');
-    cells.forEach(function(cell) {
-        cell.addEventListener('click', function() {
+    cells.forEach(function (cell) {
+        cell.addEventListener('click', function () {
             if (!demolishMode) {
                 return
             }
@@ -356,7 +367,7 @@ function checkHighScoreAndUpdate(newScore) {
             if (response.length == 0 || newScore > response[0].score) {
                 let username = prompt("Please enter your name");
                 if (username != null) {
-                    saveNewHighestScore(username, newScore); 
+                    saveNewHighestScore(username, newScore);
                 }
             }
         });
@@ -384,7 +395,7 @@ function saveGameData(username) {
     for (let i = 0; i < grid.children.length; i++) {
         var childWithClass = grid.children[i].querySelector('.building');
         if (childWithClass) {
-            gameData.push({ index: i, buildingId: childWithClass.id})
+            gameData.push({ index: i, buildingId: childWithClass.id })
         }
     }
     fetch(`https://ngeeanncity-a92e.restdb.io/rest/gamedata`, {
@@ -394,7 +405,7 @@ function saveGameData(username) {
             "x-apikey": APIKEY,
             "Cache-Control": "no-cache",
         },
-        body: JSON.stringify({ name: username, grid: JSON.stringify(gameData)}),
+        body: JSON.stringify({ name: username, grid: JSON.stringify(gameData) }),
     })
         .then((res) => res.json())
         .then((response) => {

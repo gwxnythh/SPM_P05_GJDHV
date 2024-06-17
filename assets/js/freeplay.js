@@ -144,7 +144,7 @@ function generateRandomBuilding() {
 
 function calculateBuildingScore(buildingId, cell) {
     // Placeholder function to calculate building score
-    return 10;
+    return 1;
 }
 
 function calculateBuildingCoinEarned(buildingId, cell) {
