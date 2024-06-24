@@ -567,7 +567,6 @@ body {
     width: 40px;
 }
 /* ====== displayhighscore.html ====== */
-
 .displayhs-container {
     background-color: #fff;
     padding: 20px;
@@ -576,14 +575,17 @@ body {
     width: 300px;
     text-align: center;
 }
-.displayhs-container .x-buttons {
+.displayhs-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 30px;
-    width: 100%;
+    /* justify-content: center; */
+    margin-bottom: 20px;
 }
-.displayhs-container .x-buttons a {
+.left-buttons {
+    display: flex;
+    align-items: center;
+}
+.left-buttons a {
     text-decoration: none;
     color: var(--primary-color-light);
     background-color: var(--primary-color);
@@ -592,19 +594,19 @@ body {
     align-items: center;
     padding: 5px;
     border-radius: 5px;
+    margin-right: 50px;
 }
 .heading1 {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 0;
+    font-size: 24px;
 }
-table {
+.displayhs-body table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
     font-size: 18px;
 }
-th {
+.displayhs-body th {
     padding: 10px;
     border-bottom: 3px solid #ddd;
 }
