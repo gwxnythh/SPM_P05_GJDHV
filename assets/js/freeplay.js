@@ -4,7 +4,7 @@ let coins = Infinity; // Set coins to Infinity for unlimited coins
 let turns = 0;
 let score = 0;
 let connectedCells = [];
-let demolishMode = true;
+let demolishMode = false;
 let gridSize = 5;  // Initial grid size
 let gridExpanded = false; // Flag to track if the grid has been expanded
 let doubleGridExpanded = false
@@ -27,9 +27,6 @@ function setupEventListeners() {
 
     grid.addEventListener('dragover', dragOver);
     grid.addEventListener('drop', drop);
-
-    const demolishButton = document.getElementById('demolish-btn');
-    demolishButton.addEventListener('click', toggleDemolishMode);
 }
 
 function dragStart(event) {
@@ -118,6 +115,7 @@ function generateGrid() {
 
     // Update connectedCells using Array.from
     connectedCells = Array.from(grid.querySelectorAll('.building')).map(building => building.parentNode); 
+    cellClicked();
 }
 
 
@@ -204,31 +202,78 @@ function updateScore(score) {
     document.getElementById('score').innerText = score;
 }
 
-function toggleDemolishMode() {
-    demolishMode = !demolishMode;
+document.addEventListener('DOMContentLoaded', generateRandomBuilding, false);
+document.addEventListener('DOMContentLoaded', registerDemolishEvent, false);
+
+function registerDemolishEvent() {
     const demolishButton = document.getElementById('demolish-btn');
-    demolishButton.classList.toggle('active', demolishMode);
+    demolishButton.addEventListener('click', enableDemolishMode);
+}
+
+function enableDemolishMode() {
+    demolishMode = true;
+    const demolishButton = document.getElementById('demolish-btn');
+    demolishButton.style.border = "2px dotted red";
 }
 
 function disableDemolishMode() {
     demolishMode = false;
     const demolishButton = document.getElementById('demolish-btn');
-    demolishButton.classList.remove('active');
+    demolishButton.style.border = "";
 }
+// Call cellClicked once during initialization
+document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', cellClicked);
 
-function cellClicked() {
-    // Logic for cell click events when in demolish mode
-    grid.addEventListener('click', event => {
-        const cell = event.target;
-        if (demolishMode && cell.classList.contains('cell') && cell.children.length > 0) {
-            const buildingElement = cell.firstChild;
-            const buildingId = buildingElement.id.split('-')[0];
-            cell.removeChild(buildingElement);
-            connectedCells = connectedCells.filter(c => c !== cell);
-            turns += 1;
-            updateTurns(turns);
-        }
+// Function to remove a cell from connectedCells
+function removeCellFromConnectedCells(specificDiv) {
+    const index = connectedCells.findIndex(cell => cell.children[0] === specificDiv);
+    if (index !== -1) {
+      connectedCells.splice(index, 1);
+    }
+  }
+  
+  function cellClicked() {
+    // Remove existing event listeners before reattaching
+    const cells = document.querySelectorAll('#grid .cell');
+    cells.forEach(cell => {
+        cell.replaceWith(cell.cloneNode(true)); // Clone to remove event listeners
     });
+    
+    // Re-attach the event listeners to the new cells
+    const newCells = document.querySelectorAll('#grid .cell'); 
+    newCells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            if (!demolishMode) return;
+
+            const buildingElement = cell.querySelector('div.building');
+            if (buildingElement && coins >= 1) {
+                coins -= 1;
+                updateCoins(coins);
+
+                const cellIndex = Array.from(grid.children).indexOf(cell); // Get the correct cell index
+                const buildingIndex = buildingData.findIndex(data => data.index === cellIndex);
+
+                if (buildingIndex > -1) {
+                    buildingData.splice(buildingIndex, 1);
+                }
+                buildingElement.remove();
+
+                // Update connectedCells
+                connectedCells = Array.from(grid.querySelectorAll('.building')).map(building => building.parentNode);
+
+                disableDemolishMode(); 
+            } else if (!buildingElement) {
+                alert("No building to demolish!"); 
+            } else {
+                alert("You don't have enough coins to demolish!");
+            }
+        });
+    });
+}
+  
+  function calculateCellIndex(cell, gridSize) {
+    return Array.from(grid.children).indexOf(cell);
 }
 
 function generateRandomBuilding() {
@@ -240,8 +285,9 @@ function generateRandomBuilding() {
 function calculateBuildingScore(buildingId, cell) {
   let buildingScore = 0;
 
-  const row = Math.floor(Array.from(grid.children).indexOf(cell) / 20);
-  const col = Array.from(grid.children).indexOf(cell) % 20;
+  const row = Math.floor(Array.from(grid.children).indexOf(cell) / gridSize);
+    const col = Array.from(grid.children).indexOf(cell) % gridSize;
+  
 
   switch (buildingId) {
       case 'residential':
@@ -276,8 +322,8 @@ function calculateBuildingScore(buildingId, cell) {
 function calculateBuildingCoinEarned(buildingId, cell) {
   let coinsEarned = 0;
 
-  const row = Math.floor(Array.from(grid.children).indexOf(cell) / 20);
-  const col = Array.from(grid.children).indexOf(cell) % 20;
+  const row = Math.floor(Array.from(grid.children).indexOf(cell) / gridSize);
+    const col = Array.from(grid.children).indexOf(cell) % gridSize;
 
   switch (buildingId) {
       case 'residential':
@@ -299,45 +345,49 @@ function calculateBuildingCoinEarned(buildingId, cell) {
 }
 // Function to calculate score based on adjacent buildings of a specific type
 function calculateAdjacentScore(row, col, buildingType, scoreIncrement) {
-  let adjacentScore = 0;
-  const adjacentIndices = findAdjacentBuilding(row, col, 20, 20);
-  for (const adjacentIndex of adjacentIndices) {
+    let adjacentScore = 0;
+    const adjacentIndices = findAdjacentBuilding(row, col, gridSize, gridSize); // Use gridSize consistently
+  
+    for (const adjacentIndex of adjacentIndices) {
       const adjacentCell = grid.children[adjacentIndex];
-
-      if (adjacentCell?.children?.length) { // Optional chaining for conciseness
-          const adjacentBuilding = adjacentCell.children[0].id.split('-')[0];
-          if (adjacentBuilding === buildingType) {
-              adjacentScore += scoreIncrement;
-          }
-      } 
-  }
-  return adjacentScore;
-}
-
-
-function calculateConnectedRoadScore(row) {
-  let connectedRoads = 0;
-  let prevRoadCol = -1; // Variable to store the column index of the previous road in the same row
-
-  // Iterate through each column in the specified row
-  for (let col = 0; col < 20; col++) {
-      const cell = grid.children[row * 20 + col];
-      if (cell.children.length > 0 && cell.children[0].id.split('-')[0] === 'road') {
-          if (prevRoadCol === -1 || col === prevRoadCol + 1) {
-              connectedRoads++; // Increment the count if a new road is in the same row as the previous road
-          }
-          prevRoadCol = col; // Update the previous road column index
+      if (adjacentCell && adjacentCell.children.length > 0) {
+        const adjacentBuilding = adjacentCell.children[0].id.split('-')[0]; // Extract base ID
+        if (adjacentBuilding === buildingType) {
+          adjacentScore += scoreIncrement;
+        }
       }
+    }
+    return adjacentScore;
   }
 
-  // Return 1 if more than one road is connected in the same row and it's not the first road, otherwise return 0
-  return connectedRoads > 1 ? 1 : 0;
+
+  function calculateConnectedRoadScore(row) {
+    let connectedRoads = 0;
+    let prevRoadCol = -1; 
+
+    // Iterate only up to the current grid size
+    for (let col = 0; col < gridSize; col++) { 
+        const cellIndex = row * gridSize + col; // Calculate correct index
+
+        // Ensure the cell exists before accessing it
+        if (cellIndex < grid.children.length) { 
+            const cell = grid.children[cellIndex];
+            if (cell.children.length > 0 && cell.children[0].id.split('-')[0] === 'road') {
+                if (prevRoadCol === -1 || col === prevRoadCol + 1) {
+                    connectedRoads++; 
+                }
+                prevRoadCol = col; 
+            }
+        }
+    }
+    
+    return connectedRoads > 1 ? 1 : 0;
 }
 
 function calculateAdjacentCoinEarned(row, col, buildingType, coinEarned) {
-  let adjacentCoinEarned = 0;
+    let adjacentCoinEarned = 0;
 
-  const adjacentIndices = findAdjacentBuilding(row, col, 20, 20);
+    const adjacentIndices = findAdjacentBuilding(row, col, gridSize, gridSize); // Use gridSize here too
   for (let i = 0; i < adjacentIndices.length; i++) {
       const adjacentCell = grid.children[adjacentIndices[i]];
       if (adjacentCell.children.length > 0) {
@@ -350,6 +400,28 @@ function calculateAdjacentCoinEarned(row, col, buildingType, coinEarned) {
 
   return adjacentCoinEarned;
 }
+
+function generateRandomBuilding() {
+    resetBuildingDisplay();
+    let randomBuildingOne = getRandomBuildingType();
+    let randomBuildingTwo = getRandomBuildingType();
+    while (randomBuildingOne === randomBuildingTwo) {
+        randomBuildingTwo = getRandomBuildingType();
+    }
+    document.getElementById(randomBuildingOne).style.display = "block";
+    document.getElementById(randomBuildingTwo).style.display = "block";
+}
+
+function resetBuildingDisplay() {
+    for (let i = 0; i < buildings.length; i++) {
+        document.getElementById(buildings[i]).style.display = "none";
+    }
+}
+	
+function getRandomBuildingType() {
+    return buildings[Math.floor(Math.random() * buildings.length)];
+}
+
 
 function findAdjacentBuilding(row, col, maxCols, maxRows) {
   const adjacentIndices = [];
