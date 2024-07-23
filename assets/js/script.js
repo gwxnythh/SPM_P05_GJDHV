@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Select the logout button
     const logoutBtn = document.getElementById('logout-btn');
 
-    // Add a click event listener to the logout button
-    logoutBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        logout();
-    });
+    if (logoutBtn) {
+        // Add a click event listener to the logout button
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            logout();
+        });
+    }
 
     function logout() {
         // Clear user data (localStorage/sessionStorage/cookies)
@@ -18,5 +20,25 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         // Redirect to the login page
         window.location.href = 'login-register.html';
+    }
+
+    const arcadeGameBtn = document.getElementById("arcade-game-btn");
+    if (arcadeGameBtn)  {
+        arcadeGameBtn.addEventListener("click", function () {
+            let filename = localStorage.getItem('loadedGame')
+            if (filename != null) {
+                localStorage.removeItem('loadedGame')
+            }
+        });
+    }
+
+    const freeGameBtn = document.getElementById("free-game-btn");
+    if (freeGameBtn)  {
+        freeGameBtn.addEventListener("click", function () {
+            let filename = localStorage.getItem('loadedGame')
+            if (filename != null) {
+                localStorage.removeItem('loadedGame')
+            }
+        });
     }
 });

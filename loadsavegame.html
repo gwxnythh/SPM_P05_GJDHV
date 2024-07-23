@@ -12,15 +12,29 @@
 </head>
 
 
-<body class="mainmenu-body">
-    <div class="mainmenu-container">
-        <div class="mainmenu-content">
-            
+<body class="loadsavegame-body">
+    <div class="loadsavegame-container">
+        <div class="loadsavegame-buttons">
+            <div class="left-buttons">
+                <!-- Exit Button -->
+                <a href="index.html" id="exit-button" class="button"><i class='bx bx-x'></i></a>
+            </div>
+            <div class="right-buttons">
+                <button id="arcade-load-game-btn" style="margin-right: 10px;">Arcade</button>
+                <button id="free-load-game-btn">Free Play</button>
+            </div>
+        </div>
+        <div class="loadsavegame-header">
+            <h1>Saved Game</h1>
+        </div>
+        <div class="loadsavegame-files">
+            <!-- Game State Data will be loaded here -->
         </div>
     </div>
 
     <!-- Scripts -->
-    
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/loadsavegame.js"></script>
 </body>
 
 </html>

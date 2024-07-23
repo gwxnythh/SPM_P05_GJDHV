@@ -13,14 +13,20 @@
 
 <body class="displayhs-body">
     <div class="displayhs-container">
-        <div class="displayhs-header">
+        <div class="displayhs-buttons">
             <div class="left-buttons">
                 <!-- Exit Button -->
                 <a href="index.html" id="exit-button" class="button"><i class='bx bx-x'></i></a>
-                <h1 class="heading1">Leaderboard</h1>
+            </div>
+            <div class="right-buttons">
+                <button style="margin-right: 10px;">Arcade</button>
+                <button>Free Play</button>
             </div>
         </div>
-        <table>
+        <div class="displayhs-header">
+            <h1>Leaderboard</h1>
+        </div>
+        <table id="leaderboard-table">
             <thead>
                 <tr>
                     <th>Ranking</th>
@@ -28,8 +34,14 @@
                     <th>Score</th>
                 </tr>
             </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
         </table>
     </div>
+
+    <!-- Scripts -->
+    <script src="./assets/js/leaderboard.js"></script>
 </body>
 
 </html>
